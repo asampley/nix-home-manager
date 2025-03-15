@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "awesome-config": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1741942262,
+        "narHash": "sha256-R5rfegbFC97XnZHYGiFzFiyjMUPX7nQmdP9NoNOWvIs=",
+        "ref": "refs/heads/master",
+        "rev": "f345603b2d76e1aa3faee3ad0511ee84fb6affd0",
+        "revCount": 3,
+        "type": "git",
+        "url": "file:./files/.config/awesome?ref=main?submodules=1"
+      },
+      "original": {
+        "type": "git",
+        "url": "file:./files/.config/awesome?ref=main?submodules=1"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -36,10 +52,28 @@
         "type": "github"
       }
     },
+    "nvim-config": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1740445686,
+        "narHash": "sha256-y3s+TC8mdHU2CbF7nhYkd0/7Audm48SLbBrviW7npFM=",
+        "ref": "refs/heads/main",
+        "rev": "0cd99a7e3d2006d94819eebaf4f27a969caee40a",
+        "revCount": 26,
+        "type": "git",
+        "url": "file:./files/.config/nvim"
+      },
+      "original": {
+        "type": "git",
+        "url": "file:./files/.config/nvim"
+      }
+    },
     "root": {
       "inputs": {
+        "awesome-config": "awesome-config",
         "home-manager": "home-manager",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "nvim-config": "nvim-config"
       }
     }
   },

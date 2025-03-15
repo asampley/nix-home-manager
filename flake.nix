@@ -8,9 +8,21 @@
 			url = "github:nix-community/home-manager";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
+		nvim-config = {
+			# TODO: This will simplify in 2.27
+			url = "file:./files/.config/nvim";
+			type = "git";
+			flake = false;
+		};
+		awesome-config = {
+			# TODO: This will simplify in 2.27
+			url = "file:./files/.config/awesome?ref=main?submodules=1";
+			type = "git";
+			flake = false;
+		};
 	};
 
-	outputs = { nixpkgs, home-manager, ... }:
+	outputs = { nixpkgs, home-manager, nvim-config, awesome-config, ... }:
 		let
 			system = "x86_64-linux";
 			pkgs = nixpkgs.legacyPackages.${system};
@@ -24,6 +36,10 @@
 
 				# Optionally use extraSpecialArgs
 				# to pass through arguments to home.nix
+				extraSpecialArgs = {
+					inherit nvim-config;
+					inherit awesome-config;
+				};
 			};
 		};
 }

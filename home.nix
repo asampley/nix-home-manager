@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, nvim-config, awesome-config, ... }:
 
 {
 	# Home Manager needs a bit of information about you and the paths it should
@@ -44,7 +44,6 @@
 		neovim
 		openssh
 		ripgrep
-		torbrowser
 	];
 
 	# Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -72,11 +71,11 @@
 		".xinitrc".source = files/.xinitrc;
 		".editorconfig".source = files/.editorconfig;
 		".config/awesome" = {
-			source = files/.config/awesome;
+			source = awesome-config;
 			recursive = true;
 		};
 		".config/nvim" = {
-			source = files/.config/nvim;
+			source = nvim-config;
 			recursive = true;
 		};
 	};
