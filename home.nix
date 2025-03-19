@@ -35,9 +35,16 @@
 		#   echo "Hello, ${config.home.username}!"
 		# '')
 
+		# x packages
 		awesome
+		bitwarden
+		dconf
 		dex
+		discord
 		firefox
+		kitty
+
+		# terminal packages
 		git
 		glibcLocales
 		keychain
@@ -45,6 +52,11 @@
 		openssh
 		ripgrep
 	];
+
+	nixpkgs.config.allowUnfreePredicate = pkg:
+		builtins.elem (pkgs.lib.getName pkg) [
+			"discord"
+		];
 
 	# Home Manager is pretty good at managing dotfiles. The primary way to manage
 	# plain files is through 'home.file'.
@@ -61,7 +73,6 @@
 		# '';
 
 		".profile".text = (builtins.readFile files/.profile) + ''
-			. $HOME/.nix-profile/etc/profile.d/nix.sh
 			. $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh
 		'';
 		".bashrc".source = files/.bashrc;
@@ -99,6 +110,18 @@
 	home.sessionVariables = {
 		EDITOR = "nvim";
 		VISUAL = "nvim";
+	};
+
+	gtk = {
+		enable = true;
+		theme = {
+			package = pkgs.rose-pine-gtk-theme;
+			name = "rose-pine";
+		};
+		iconTheme = {
+			package = pkgs.rose-pine-icon-theme;
+			name = "rose-pine";
+		};
 	};
 
 	# Let Home Manager install and manage itself.

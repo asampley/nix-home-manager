@@ -8,8 +8,12 @@
 			url = "github:nix-community/home-manager";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
-		# TODO: This will simplify in 2.27
-		nvim-config.url = "git+file:./files/.config/nvim";
+		nvim-config = {
+			type = "git";
+			# TODO: This will simplify in 2.27
+			url = "file:./files/.config/nvim";
+			flake = false;
+		};
 		awesome-config = {
 			type = "git";
 			# TODO: This will simplify in 2.27
