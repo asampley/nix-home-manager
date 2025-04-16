@@ -15,6 +15,14 @@
 	# release notes.
 	home.stateVersion = "24.11"; # Please read the comment before changing.
 
+	nix.gc = {
+		automatic = true;
+		frequency = "weekly";
+		options = "--delete-older-than 30d";
+		persistent = true;
+		randomizedDelaySec = "45min";
+	};
+
 	# The home.packages option allows you to install Nix packages into your
 	# environment.
 	home.packages = with pkgs; [
@@ -42,7 +50,14 @@
 		dex
 		discord
 		firefox
+		kdePackages.kdenlive
 		kitty
+		vlc
+		(wineWowPackages.full.override {
+			wineRelease = "staging";
+			mingwSupport = true;
+		})
+		winetricks
 
 		# terminal packages
 		git
@@ -51,6 +66,7 @@
 		neovim
 		openssh
 		ripgrep
+		unzip
 	];
 
 	nixpkgs.config.allowUnfreePredicate = pkg:
@@ -126,4 +142,11 @@
 
 	# Let Home Manager install and manage itself.
 	programs.home-manager.enable = true;
+
+	programs.obs-studio = {
+		enable = true;
+		plugins = [
+			pkgs.obs-studio-plugins.obs-pipewire-audio-capture
+		];
+	};
 }

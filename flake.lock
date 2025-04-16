@@ -3,11 +3,11 @@
     "awesome-config": {
       "flake": false,
       "locked": {
-        "lastModified": 1742427456,
-        "narHash": "sha256-2izImAZ5zHMzBlY6TjWPKgtRkFj+mqkAOjxBioWNp40=",
+        "lastModified": 1744818613,
+        "narHash": "sha256-6RsGMdNAcW9dfWSEQpr1u+7Ui68lHg59mD30WOZXjUk=",
         "ref": "refs/heads/master",
-        "rev": "60197c553e54f7f3885e4542ad5447c69d7fe1c5",
-        "revCount": 6,
+        "rev": "fe11def02fef02757e394b9bfc35cb9fe599b2d9",
+        "revCount": 7,
         "submodules": true,
         "type": "git",
         "url": "file:./files/.config/awesome"
@@ -25,11 +25,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1742416832,
-        "narHash": "sha256-ycok0eJJcoknqaibdv/TEEEOUqovC42XCqbfLDYmnoQ=",
+        "lastModified": 1744812667,
+        "narHash": "sha256-2AJZwXMO82YGw6B/RRCPz8Wz2zSRCZIdjhdFuiw7Ymg=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "eb0f617aecbaf1eff5bacec789891e775af2f5a3",
+        "rev": "5d48f3ded3b55ef32d5853c9022fb4df29b3fc45",
         "type": "github"
       },
       "original": {
@@ -40,11 +40,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1742288794,
-        "narHash": "sha256-Txwa5uO+qpQXrNG4eumPSD+hHzzYi/CdaM80M9XRLCo=",
+        "lastModified": 1744463964,
+        "narHash": "sha256-LWqduOgLHCFxiTNYi3Uj5Lgz0SR+Xhw3kr/3Xd0GPTM=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "b6eaf97c6960d97350c584de1b6dcff03c9daf42",
+        "rev": "2631b0b7abcea6e640ce31cd78ea58910d31e650",
         "type": "github"
       },
       "original": {
@@ -57,10 +57,11 @@
     "nvim-config": {
       "flake": false,
       "locked": {
-        "lastModified": 1740445686,
-        "narHash": "sha256-y3s+TC8mdHU2CbF7nhYkd0/7Audm48SLbBrviW7npFM=",
-        "rev": "0cd99a7e3d2006d94819eebaf4f27a969caee40a",
-        "revCount": 26,
+        "lastModified": 1744691171,
+        "narHash": "sha256-9ovKmsbtW8v3QzBO4d3M8nHwyJwpPGSADuuftMKtW0o=",
+        "ref": "refs/heads/main",
+        "rev": "4b58b4d665ca085793b582851ef0795f8d0d9b47",
+        "revCount": 27,
         "type": "git",
         "url": "file:./files/.config/nvim"
       },
