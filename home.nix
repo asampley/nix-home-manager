@@ -1,4 +1,4 @@
-{ config, pkgs, nvim-config, awesome-config, ... }:
+{ config, pkgs, nvim-config, awesome-config, gui, x, wine, ... }:
 
 {
 	# Home Manager needs a bit of information about you and the paths it should
@@ -43,22 +43,6 @@
 		#   echo "Hello, ${config.home.username}!"
 		# '')
 
-		# x packages
-		awesome
-		bitwarden
-		dconf
-		dex
-		discord
-		firefox
-		kdePackages.kdenlive
-		kitty
-		vlc
-		(wineWowPackages.full.override {
-			wineRelease = "staging";
-			mingwSupport = true;
-		})
-		winetricks
-
 		# terminal packages
 		git
 		glibcLocales
@@ -67,6 +51,24 @@
 		openssh
 		ripgrep
 		unzip
+	] ++ pkgs.lib.optionals x [
+		awesome
+	] ++ pkgs.lib.optionals gui [
+		# x packages
+		bitwarden
+		dconf
+		dex
+		discord
+		firefox
+		kdePackages.kdenlive
+		kitty
+		vlc
+	] ++ pkgs.lib.optionals wine [
+		(wineWowPackages.full.override {
+			wineRelease = "staging";
+			mingwSupport = true;
+		})
+		winetricks
 	];
 
 	nixpkgs.config.allowUnfreePredicate = pkg:
@@ -94,17 +96,37 @@
 		".bashrc".source = files/.bashrc;
 		".bash_profile".source = files/.bash_profile;
 		".bash_logout".source = files/.bash_logout;
-		".xsession".source = files/.xsession;
-		".xinitrc".source = files/.xinitrc;
 		".editorconfig".source = files/.editorconfig;
-		".config/awesome" = {
-			source = awesome-config;
-			recursive = true;
-		};
 		".config/nvim" = {
 			source = nvim-config;
 			recursive = true;
 		};
+	} // pkgs.lib.optionalAttrs x {
+		".xsession".source = files/.xsession;
+		".xinitrc".source = files/.xinitrc;
+		".config/awesome" = {
+			source = awesome-config;
+			recursive = true;
+		};
+	};
+
+	gtk = {
+		enable = gui;
+		theme = {
+			package = pkgs.rose-pine-gtk-theme;
+			name = "rose-pine";
+		};
+		iconTheme = {
+			package = pkgs.rose-pine-icon-theme;
+			name = "rose-pine";
+		};
+	};
+
+	programs.obs-studio = {
+		enable = gui;
+		plugins = [
+			pkgs.obs-studio-plugins.obs-pipewire-audio-capture
+		];
 	};
 
 	# Home Manager can also manage your environment variables through
@@ -128,25 +150,6 @@
 		VISUAL = "nvim";
 	};
 
-	gtk = {
-		enable = true;
-		theme = {
-			package = pkgs.rose-pine-gtk-theme;
-			name = "rose-pine";
-		};
-		iconTheme = {
-			package = pkgs.rose-pine-icon-theme;
-			name = "rose-pine";
-		};
-	};
-
 	# Let Home Manager install and manage itself.
 	programs.home-manager.enable = true;
-
-	programs.obs-studio = {
-		enable = true;
-		plugins = [
-			pkgs.obs-studio-plugins.obs-pipewire-audio-capture
-		];
-	};
 }

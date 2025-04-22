@@ -27,7 +27,8 @@
 		let
 			system = "x86_64-linux";
 			pkgs = nixpkgs.legacyPackages.${system};
-		in {
+		in rec {
+			# Fallback system that assumes no features available
 			homeConfigurations."asampley" = home-manager.lib.homeManagerConfiguration {
 				inherit pkgs;
 
@@ -40,6 +41,27 @@
 				extraSpecialArgs = {
 					inherit nvim-config;
 					inherit awesome-config;
+					gui = false;
+					x = false;
+					wine = false;
+				};
+			};
+
+			homeConfigurations."asampley@amanda" = home-manager.lib.homeManagerConfiguration {
+				inherit pkgs;
+
+				# Specify your home configuration modules here, for example,
+				# the path to your home.nix.
+				modules = [ ./home.nix ];
+
+				# Optionally use extraSpecialArgs
+				# to pass through arguments to home.nix
+				extraSpecialArgs = {
+					inherit nvim-config;
+					inherit awesome-config;
+					gui = true;
+					x = true;
+					wine = true;
 				};
 			};
 		};
