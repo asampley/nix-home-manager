@@ -15,6 +15,10 @@
 	# release notes.
 	home.stateVersion = "24.11"; # Please read the comment before changing.
 
+	nix.package = pkgs.nix;
+	nix.settings.experimental-features = [ "nix-command" "flakes" ];
+	nix.settings.bash-prompt-prefix = "nix-env:";
+
 	nix.gc = {
 		automatic = true;
 		frequency = "weekly";
