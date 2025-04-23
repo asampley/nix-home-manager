@@ -18,6 +18,11 @@ indent_style = space
 indent_size = 4
 trim_trailing_whitespace = false
 
+# Nix prints errors expecting a standard 2 space format
+[{*.nix,flake.lock}]
+indent_style = space
+indent_size = 2
+
 # Yaml often will not parse tabs
 [*.yaml]
 indent_style = space

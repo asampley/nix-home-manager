@@ -75,8 +75,21 @@
         "awesome-config": "awesome-config",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
-        "nvim-config": "nvim-config"
+        "nvim-config": "nvim-config",
+        "systems": "systems"
       }
+    },
+    "systems": {
+      "flake": false,
+      "locked": {
+        "path": "systems.nix",
+        "type": "path"
+      },
+      "original": {
+        "path": "systems.nix",
+        "type": "path"
+      },
+      "parent": []
     }
   },
   "root": "root",
