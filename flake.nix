@@ -33,29 +33,34 @@
 
   outputs = { nixpkgs, systems, home-manager, nvim-config, awesome-config, ... }: {
     # Using packages.${system}.homeConfigurations allows us to build for many targets
-    packages = nixpkgs.lib.genAttrs (import systems) (system: rec {
+    packages = let
+      # Specify your home configuration modules here, for example, the path to your home.nix.
+      modules = [ ./home.nix ];
+
+      # Optionally use extraSpecialArgs to pass through arguments to home.nix
+      extraSpecialArgs = {
+        inherit nvim-config awesome-config;
+        gui = false;
+        x = false;
+        wine = false;
+      };
+    in nixpkgs.lib.genAttrs (import systems) (system: let
+      pkgs = nixpkgs.legacyPackages.${system};
+    in rec {
       # Fallback system that assumes no features available
       homeConfigurations."asampley" = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.${system};
-
-        # Specify your home configuration modules here, for example, the path to your home.nix.
-        modules = [ ./home.nix ];
-
-        # Optionally use extraSpecialArgs to pass through arguments to home.nix
-        extraSpecialArgs = {
-          inherit nvim-config;
-          inherit awesome-config;
-          gui = false;
-          x = false;
-          wine = false;
-        };
+        inherit pkgs modules extraSpecialArgs;
       };
 
       # Home computer with additional features
-      homeConfigurations."asampley@amanda" = homeConfigurations."asampley" // {
-        extraSpecialArgs.gui = true;
-        extraSpecialArgs.x = true;
-        extraSpecialArgs.wine = true;
+      homeConfigurations."asampley@amanda" = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs modules;
+
+        extraSpecialArgs = extraSpecialArgs // {
+          gui = true;
+          x = true;
+          wine = true;
+        };
       };
     });
   };
