@@ -52,7 +52,7 @@
 		glibcLocales
 		keychain
 		neovim
-		openssh
+		(openssh.override { withKerberos = true; })
 		ripgrep
 		unzip
 	] ++ pkgs.lib.optionals x [
