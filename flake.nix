@@ -14,24 +14,9 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    nvim-config = {
-      type = "git";
-      # TODO: This will simplify in 2.27
-      url = "file:./files/.config/nvim";
-      flake = false;
-    };
-
-    awesome-config = {
-      type = "git";
-      # TODO: This will simplify in 2.27
-      url = "file:./files/.config/awesome";
-      submodules = true;
-      flake = false;
-    };
   };
 
-  outputs = { nixpkgs, systems, home-manager, nvim-config, awesome-config, ... }: {
+  outputs = { nixpkgs, systems, home-manager, ... }: {
     # Using packages.${system}.homeConfigurations allows us to build for many targets
     packages = let
       # Specify your home configuration modules here, for example, the path to your home.nix.
@@ -39,7 +24,6 @@
 
       # Optionally use extraSpecialArgs to pass through arguments to home.nix
       extraSpecialArgs = {
-        inherit nvim-config awesome-config;
         gui = false;
         x = false;
         wine = false;
