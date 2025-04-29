@@ -1,6 +1,9 @@
-{ config, pkgs, nvim-config, awesome-config, gui, x, wine, ... }:
-
+{ config, pkgs, ... }:
 rec {
+  imports = [
+    ./modules
+  ];
+
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "asampley";
@@ -16,7 +19,10 @@ rec {
   home.stateVersion = "24.11"; # Please read the comment before changing.
 
   nix.package = pkgs.nix;
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
   nix.settings.bash-prompt-prefix = "nix-env:";
 
   nix.gc = {
@@ -48,37 +54,19 @@ rec {
     # '')
 
     # terminal packages
+    alejandra
     git
     glibcLocales
     keychain
     neovim
+    nixd
     (openssh.override { withKerberos = true; })
     ripgrep
     unzip
-  ] ++ pkgs.lib.optionals x [
-    awesome
-    scrot
-    xclip
-  ] ++ pkgs.lib.optionals gui [
-    # x packages
-    bitwarden
-    dconf
-    dex
-    discord
-    firefox
-    kdePackages.kdenlive
-    kitty
-    libreoffice
-    vlc
-  ] ++ pkgs.lib.optionals wine [
-    (wineWowPackages.full.override {
-      wineRelease = "staging";
-      mingwSupport = true;
-    })
-    winetricks
   ];
 
-  nixpkgs.config.allowUnfreePredicate = pkg:
+  nixpkgs.config.allowUnfreePredicate =
+    pkg:
     builtins.elem (pkgs.lib.getName pkg) [
       "discord"
     ];
@@ -86,49 +74,21 @@ rec {
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
-    ".profile".text = (builtins.readFile files/.profile) + ''
-      . $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh
-    '';
+    ".profile".text =
+      (builtins.readFile files/.profile)
+      + ''
+        . $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh
+      '';
     ".bashrc".source = files/.bashrc;
     ".bash_profile".source = files/.bash_profile;
     ".bash_logout".source = files/.bash_logout;
     ".editorconfig".source = files/.editorconfig;
 
-    ".xsession" = {
-      enable = x;
-      source = files/.xsession;
-    };
-    ".xinitrc" = {
-      enable = x;
-      source = files/.xinitrc;
-    };
-
     # Link to repository in home-manager for easy changes and testing as it's already stored in its own repo
     # Though this does disable rollbacks, they can be done with git easily enough
-    ".config/nvim".source = config.lib.file.mkOutOfStoreSymlink (home.homeDirectory + "/.config/home-manager/files/.config/nvim");
-    ".config/awesome" = {
-      enable = x;
-      source = config.lib.file.mkOutOfStoreSymlink (home.homeDirectory + "/.config/home-manager/files/.config/awesome");
-    };
-  };
-
-  gtk = {
-    enable = gui;
-    theme = {
-      package = pkgs.rose-pine-gtk-theme;
-      name = "rose-pine";
-    };
-    iconTheme = {
-      package = pkgs.rose-pine-icon-theme;
-      name = "rose-pine";
-    };
-  };
-
-  programs.obs-studio = {
-    enable = gui;
-    plugins = [
-      pkgs.obs-studio-plugins.obs-pipewire-audio-capture
-    ];
+    ".config/nvim".source = config.lib.file.mkOutOfStoreSymlink (
+      home.homeDirectory + "/.config/home-manager/files/.config/nvim"
+    );
   };
 
   # Home Manager can also manage your environment variables through
