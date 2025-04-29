@@ -54,7 +54,6 @@ rec {
     # '')
 
     # terminal packages
-    alejandra
     git
     glibcLocales
     keychain
