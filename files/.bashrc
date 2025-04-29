@@ -4,8 +4,8 @@
 
 # If not running interactively, don't do anything
 case $- in
-    *i*) ;;
-      *) return;;
+	*i*) ;;
+	*) return;;
 esac
 
 # don't put duplicate lines or lines starting with space in the history.
@@ -57,7 +57,7 @@ xterm*|rxvt*)
 esac
 
 # enable color support of ls
-if [ -x /usr/bin/dircolors ]; then
+if command -v dircolors > /dev/null; then
 	test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 fi
 
@@ -84,6 +84,7 @@ fi
 set -o vi
 
 alias vim=nvim
+alias ls='ls --color=auto'
 
 # Allow per computer configuration
 if [ -f ~/.bashrc.local ]; then source ~/.bashrc.local; fi
