@@ -18,6 +18,9 @@ rec {
   # release notes.
   home.stateVersion = "24.11"; # Please read the comment before changing.
 
+  # Let Home Manager install and manage itself.
+  programs.home-manager.enable = true;
+
   nix.package = pkgs.nix;
   nix.settings.experimental-features = [
     "nix-command"
@@ -62,6 +65,7 @@ rec {
     (openssh.override { withKerberos = true; })
     ripgrep
     unzip
+    vivid
   ];
 
   nixpkgs.config.allowUnfreePredicate =
@@ -88,6 +92,25 @@ rec {
     ".config/nvim".source = config.lib.file.mkOutOfStoreSymlink (
       home.homeDirectory + "/.config/home-manager/files/.config/nvim"
     );
+
+    ".config/tinted-theming.list".text = ''
+      ${config.lib.stylix.colors.base00}
+      ${config.lib.stylix.colors.base01}
+      ${config.lib.stylix.colors.base02}
+      ${config.lib.stylix.colors.base03}
+      ${config.lib.stylix.colors.base04}
+      ${config.lib.stylix.colors.base05}
+      ${config.lib.stylix.colors.base06}
+      ${config.lib.stylix.colors.base07}
+      ${config.lib.stylix.colors.base08}
+      ${config.lib.stylix.colors.base09}
+      ${config.lib.stylix.colors.base0A}
+      ${config.lib.stylix.colors.base0B}
+      ${config.lib.stylix.colors.base0C}
+      ${config.lib.stylix.colors.base0D}
+      ${config.lib.stylix.colors.base0E}
+      ${config.lib.stylix.colors.base0F}
+    '';
   };
 
   # Home Manager can also manage your environment variables through
@@ -111,6 +134,6 @@ rec {
     VISUAL = "nvim";
   };
 
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
+  stylix.enable = true;
+  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/darkviolet.yaml";
 }

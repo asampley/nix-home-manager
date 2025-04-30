@@ -14,6 +14,9 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Unified style settings for many programs
+    stylix.url = "github:danth/stylix";
   };
 
   outputs =
@@ -22,10 +25,11 @@
       nixpkgs,
       systems,
       home-manager,
+      stylix,
       ...
     }:
     {
-      homeModules = {
+      homeManagerModules = {
         # Fallback system that assumes no features available
         "asampley" = { };
 
@@ -50,10 +54,11 @@
 
             modules = [
               ./home.nix
+              stylix.homeManagerModules.stylix
               value
             ];
           }
-        ) self.homeModules;
+        ) self.homeManagerModules;
       });
     };
 }

@@ -17,21 +17,12 @@
       discord
       firefox
       kdePackages.kdenlive
-      kitty
       libreoffice
       vlc
     ];
 
-    gtk = {
+    programs.kitty = {
       enable = true;
-      theme = {
-        package = pkgs.rose-pine-gtk-theme;
-        name = "rose-pine";
-      };
-      iconTheme = {
-        package = pkgs.rose-pine-icon-theme;
-        name = "rose-pine";
-      };
     };
 
     programs.obs-studio = {
