@@ -136,4 +136,6 @@ rec {
 
   stylix.enable = true;
   stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/darkviolet.yaml";
+  # firefox complains about changing settings if you mess with it
+  stylix.targets.firefox.enable = false;
 }
