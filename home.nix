@@ -134,21 +134,13 @@ rec {
     VISUAL = "nvim";
   };
 
-  stylix.enable = true;
+  stylix.enable = config.my.gui.enable;
   stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/darkviolet.yaml";
-
-  # Auto enable makes things complicated when dependencies are missing.
-  stylix.autoEnable = false;
 
   stylix.targets = {
     # firefox complains about changing settings if you mess with it
     firefox.enable = false;
 
     xresources.enable = config.my.x.enable;
-
-    gtk.enable = config.my.gui.enable;
-    qt.enable = config.my.gui.enable;
-
-    kitty.enable = config.my.gui.enable;
   };
 }
