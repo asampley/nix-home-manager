@@ -29,7 +29,7 @@
       ...
     }:
     {
-      homeManagerModules = {
+      homeModules = {
         # Fallback system that assumes no features available
         "asampley" = { };
 
@@ -54,11 +54,11 @@
 
             modules = [
               ./home.nix
-              stylix.homeManagerModules.stylix
+              stylix.homeModules.stylix
               value
             ];
           }
-        ) self.homeManagerModules;
+        ) self.homeModules;
       });
     };
 }
