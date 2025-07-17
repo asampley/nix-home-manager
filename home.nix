@@ -90,9 +90,8 @@ rec {
 
     # Link to repository in home-manager for easy changes and testing as it's already stored in its own repo
     # Though this does disable rollbacks, they can be done with git easily enough
-    ".config/nvim".source = config.lib.file.mkOutOfStoreSymlink (
-      home.homeDirectory + "/.config/home-manager/files/.config/nvim"
-    );
+    ".config/nvim".source =
+      config.lib.file.mkOutOfStoreSymlink "${home.homeDirectory}/.config/home-manager/files/.config/nvim";
 
     ".config/tinted-theming.list".text = ''
       ${config.lib.stylix.colors.base00}

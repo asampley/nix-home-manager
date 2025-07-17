@@ -20,8 +20,8 @@
     home.file = {
       ".xsession".source = ../files/.xsession;
       ".xinitrc".source = ../files/.xinitrc;
-      ".config/awesome".source = config.lib.file.mkOutOfStoreSymlink
-        "${config.home.homeDirectory}/.config/home-manager/files/.config/awesome";
+      ".config/awesome".source =
+        config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/files/.config/awesome";
     };
 
     systemd.user.services.xautolock-session = {
