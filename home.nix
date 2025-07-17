@@ -61,6 +61,7 @@ rec {
     glibcLocales
     keychain
     neovim
+    nh
     nixd
     (openssh.override { withKerberos = true; })
     ripgrep
@@ -132,6 +133,7 @@ rec {
   home.sessionVariables = {
     EDITOR = "nvim";
     VISUAL = "nvim";
+    NH_HOME_FLAKE = "${home.homeDirectory}/.config/home-manager";
   };
 
   stylix.enable = config.my.gui.enable;

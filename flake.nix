@@ -16,7 +16,10 @@
     };
 
     # Unified style settings for many programs
-    stylix.url = "github:danth/stylix";
+    stylix = {
+      url = "github:danth/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -30,14 +33,17 @@
     }:
     {
       homeModules = {
-        # Fallback system that assumes no features available
-        "asampley" = { };
+        # Fallback system for terminal environment
+        "asampley" = {
+          config.my.podman.enable = true;
+        };
 
         # Home computer with additional features
         "asampley@amanda" = {
           config.my.gui.enable = true;
           config.my.x.enable = true;
           config.my.wine.enable = true;
+          config.my.podman.enable = true;
         };
       };
 
@@ -50,7 +56,10 @@
         homeConfigurations = builtins.mapAttrs (
           name: value:
           home-manager.lib.homeManagerConfiguration {
-            pkgs = nixpkgs.legacyPackages.${system};
+            pkgs = import nixpkgs {
+              inherit system;
+              overlays = [ ];
+            };
 
             modules = [
               ./home.nix
