@@ -22,5 +22,9 @@
       services.podman = {
         enable = true;
       };
+
+      home.sessionVariables = lib.mkIf cfg.compose {
+        PODMAN_COMPOSE_PROVIDER = "podman-compose";
+      };
     };
 }
