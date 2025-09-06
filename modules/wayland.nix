@@ -38,14 +38,14 @@
     in {
       enable = true;
       timeouts = [
-        {
-          timeout = lockSecs - 60;
-          command = "${pkgs.libnotify}/bin/notify-send 'Locking in 5 seconds' -t 5000";
-        }
-        {
-          timeout = lockSecs;
-          command = lock;
-        }
+        #{
+        #  timeout = lockSecs - 60;
+        #  command = "${pkgs.libnotify}/bin/notify-send 'Locking in 5 seconds' -t 5000";
+        #}
+        #{
+        #  timeout = lockSecs;
+        #  command = lock;
+        #}
       ];
       events = [
         {

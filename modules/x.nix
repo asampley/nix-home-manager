@@ -29,6 +29,8 @@
         Description = "xautolock, session locker service";
         After = [ "graphical-session.target" ];
         PartOf = [ "graphical-session.target" ];
+        # do not start if running under wayland
+        ConditionEnvironment = "!WAYLAND_DISPLAY";
       };
 
       Install = {

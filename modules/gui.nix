@@ -24,7 +24,7 @@
       vlc
     ];
 
-    programs.kitty = {
+    programs.alacritty = {
       enable = true;
     };
 
@@ -33,6 +33,12 @@
       plugins = [
         pkgs.obs-studio-plugins.obs-pipewire-audio-capture
       ];
+    };
+
+    dconf.settings = {
+      "org/gnome/desktop/interface" = {
+        color-scheme = lib.mkForce "prefer-dark";
+      };
     };
   };
 }
