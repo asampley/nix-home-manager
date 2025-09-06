@@ -30,7 +30,7 @@ rec {
 
   nix.gc = {
     automatic = true;
-    frequency = "weekly";
+    dates = "weekly";
     options = "--delete-older-than 30d";
     persistent = true;
     randomizedDelaySec = "45min";
@@ -64,9 +64,9 @@ rec {
     nh
     nixd
     (openssh.override { withKerberos = true; })
+    sshfs
     ripgrep
     unzip
-    vivid
   ];
 
   nixpkgs.config.allowUnfreePredicate =

@@ -41,6 +41,7 @@
           "-time 10"
           "-locker '${pkgs.systemd}/bin/loginctl lock-session \${XDG_SESSION_ID}'"
           "-detectsleep"
+          "-corners -0-0"
         ];
         Restart = "always";
       };

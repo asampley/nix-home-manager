@@ -12,12 +12,15 @@
   config = lib.mkIf config.my.gui.enable {
     home.packages = with pkgs; [
       bitwarden
+      chromium
       dconf
       dex
       discord
       firefox
+      inkscape
       kdePackages.kdenlive
       libreoffice
+      qbittorrent
       vlc
     ];
 
