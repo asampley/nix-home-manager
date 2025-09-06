@@ -135,7 +135,6 @@ rec {
     NH_HOME_FLAKE = "${home.homeDirectory}/.config/home-manager";
   };
 
-  stylix.enable = config.my.gui.enable;
   stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/darkviolet.yaml";
 
   stylix.targets = {
