@@ -40,5 +40,7 @@
         color-scheme = lib.mkForce "prefer-dark";
       };
     };
+
+    fonts.fontconfig.enable = true;
   };
 }

@@ -12,9 +12,15 @@
   config = lib.mkIf config.my.wayland.enable {
     home.file = {
       ".config/niri".source = ../files/.config/niri;
+      ".config/waybar/default.jsonc".source = ../files/.config/waybar/default.jsonc;
+      ".config/waybar/tablet.jsonc".source = ../files/.config/waybar/tablet.jsonc;
+      # Managed by stylix
+      #".config/waybar/style.css".source = ../files/.config/waybar/style.css;
     };
 
     home.packages = with pkgs; [
+      (writeShellScriptBin "fuzzel-power-menu" (builtins.readFile ../scripts/wayland/fuzzel-power-menu))
+      font-awesome
       wl-clipboard
       xwayland-satellite
     ];
@@ -27,6 +33,13 @@
 
     # Lock
     programs.swaylock.enable = true;
+
+    programs.waybar = {
+      enable = true;
+      systemd = {
+        enable = true;
+      };
+    };
 
     # Notifications
     services.mako.enable = true;
@@ -60,5 +73,26 @@
     };
 
     services.polkit-gnome.enable = true;
+
+    systemd.user.services.waybar-profile = {
+      Unit = {
+        Description = "profile that can be easily toggled by waybar when reloaded";
+        After = [ "graphical-session.target" ];
+        PartOf = [ "graphical-session.target" ];
+        ConditionalEnvironment = "WAYLAND_DISPLAY";
+      };
+
+      Install = {
+        WantedBy = [ "graphical-session.target" "waybar.service" ];
+      };
+
+      Service = {
+        Type = "oneshot";
+        ExecStart = with pkgs; "${writeShellScript "waybar-profile" ''
+          set -eux
+          ${coreutils}/bin/ln -sf "${config.home.homeDirectory}/.config/waybar/default.jsonc" "${config.home.homeDirectory}/.config/waybar/config.jsonc"
+        ''}";
+      };
+    };
   };
 }
