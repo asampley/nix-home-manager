@@ -12,11 +12,21 @@
   config = lib.mkIf config.my.wayland.enable {
     home.file = {
       ".config/niri".source = ../files/.config/niri;
-      ".config/waybar/default.jsonc".source = ../files/.config/waybar/default.jsonc;
-      ".config/waybar/tablet.jsonc".source = ../files/.config/waybar/tablet.jsonc;
+
       # Managed by stylix
       #".config/waybar/style.css".source = ../files/.config/waybar/style.css;
-    };
+    } // (let
+      entries = builtins.readDir ../files/.config/waybar;
+      names = builtins.attrNames entries;
+    in
+        builtins.listToAttrs (
+        map (name: {
+          name = ".config/waybar/${name}";
+          value = { source = ../files/.config/waybar/${name}; };
+        })
+        names
+      )
+    );
 
     home.packages = with pkgs; [
       (writeShellScriptBin "fuzzel-power-menu" (builtins.readFile ../scripts/wayland/fuzzel-power-menu))
@@ -74,24 +84,34 @@
 
     services.polkit-gnome.enable = true;
 
-    systemd.user.services.waybar-profile = {
-      Unit = {
-        Description = "profile that can be easily toggled by waybar when reloaded";
-        After = [ "graphical-session.target" ];
-        PartOf = [ "graphical-session.target" ];
-        ConditionalEnvironment = "WAYLAND_DISPLAY";
-      };
+    systemd.user.services = {
+      waybar-profile = {
+        Unit = {
+          Description = "set up window manager config for waybar";
+          After = [ "graphical-session.target" ];
+          PartOf = [ "graphical-session.target" ];
+        };
 
-      Install = {
-        WantedBy = [ "graphical-session.target" "waybar.service" ];
-      };
+        Install = {
+          WantedBy = [ "graphical-session.target" "waybar.service" ];
+        };
 
-      Service = {
-        Type = "oneshot";
-        ExecStart = with pkgs; "${writeShellScript "waybar-profile" ''
-          set -eux
-          ${coreutils}/bin/ln -sf "${config.home.homeDirectory}/.config/waybar/default.jsonc" "${config.home.homeDirectory}/.config/waybar/config.jsonc"
-        ''}";
+        Service = {
+          Type = "oneshot";
+          ExecStart = with pkgs; "${writeShellScript "waybar-wm" ''
+            set -eux
+            cd "${config.home.homeDirectory}/.config/waybar/"
+
+            wm_file="wm/$XDG_SESSION_DESKTOP.jsonc"
+            wm_target="wm.jsonc"
+
+            if [ -e "$wm_file" ]; then
+              ${coreutils}/bin/ln -sf "$wm_file" "$wm_target"
+            elif [ -e "$wm_target" ]; then
+              rm "$wm_target"
+            fi
+          ''}";
+        };
       };
     };
   };

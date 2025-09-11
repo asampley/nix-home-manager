@@ -1,0 +1,9 @@
+// -*- mode: jsonc -*-
+{
+	"modules-left": [
+		"niri/workspaces"
+	],
+	"niri/workspaces": {
+		"format": "{index}"
+	}
+}
