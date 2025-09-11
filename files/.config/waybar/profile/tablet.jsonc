@@ -1,6 +1,0 @@
-// -*- mode: jsonc -*-
-{
-	"include": "default.jsonc",
-	"mode": "dock",
-	"start_hidden": false
-}

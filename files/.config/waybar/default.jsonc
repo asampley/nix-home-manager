@@ -1,7 +1,7 @@
 // -*- mode: jsonc -*-
 {
-	"mode": "hide",
-	"start_hidden": true,
+	"mode": "dock",
+	"start_hidden": false,
 	// Set mode and start_hidden in included file
 	"layer": "top", // Waybar as top layer
 	"position": "top", // Waybar position (top|bottom|left|right)
