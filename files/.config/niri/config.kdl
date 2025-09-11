@@ -81,6 +81,16 @@ gestures {
 	}
 }
 
+switch-events {
+	tablet-mode-on {
+		spawn "sh" "-c" "ln -sf \"$HOME/.config/waybar/profile/tablet.jsonc\" \"$HOME/.config/waybar/profile.jsonc\""
+	}
+	tablet-mode-off {
+		spawn "sh" "-c" "rm \"$HOME/.config/waybar/profile.jsonc\""
+	}
+}
+
+
 // You can configure outputs by their name, which you can find
 // by running `niri msg outputs` while inside a niri instance.
 // The built-in laptop monitor is usually called "eDP-1".
