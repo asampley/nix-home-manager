@@ -1,0 +1,75 @@
+/* import stylix style */
+@import "./stylix.css";
+
+window#waybar {
+	background: transparent;
+}
+
+tooltip {
+	background: @base00,
+}
+
+window#waybar, tooltip {
+	color: @base05;
+}
+
+tooltip {
+	border-color: @base0D;
+}
+
+.module {
+	background-color: @base05;
+	color: @base00;
+	padding: 0 5px;
+	border-radius: 5px;
+}
+
+#window {
+	background-color: @base0C;
+	color: @base00;
+	padding: 0 5px;
+	border-radius: 5px;
+}
+
+window#waybar.empty #window {
+	background-color: transparent;
+}
+
+#workspaces {
+	background-color: transparent;
+	padding: 0;
+}
+
+#workspaces button {
+	background-color: @base03;
+	color: @base00;
+}
+#workspaces button.empty {
+	background-color: transparent;
+	color: @base03;
+	border: 2px dashed @base03;
+}
+#workspaces button.focused,
+#workspaces button.active {
+	background-color: @base05;
+	color: @base00;
+	border: none;
+}
+#workspaces button.urgent {
+	background-color: @base08;
+}
+
+#wireplumber.muted,
+#pulseaudio.muted,
+#sndio.muted {
+	background-color: @base0C;
+}
+#upower.charging,
+#battery.Charging {
+	background-color: @base0E;
+}
+#network.disconnected,
+#bluetooth.disabled {
+	background-color: @base00;
+	color: @base05;
+}

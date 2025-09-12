@@ -13,8 +13,19 @@
     home.file = {
       ".config/niri".source = ../files/.config/niri;
 
-      # Managed by stylix
-      #".config/waybar/style.css".source = ../files/.config/waybar/style.css;
+      # Generated from stylix
+      ".config/waybar/stylix.css".text =
+        ''
+        * {
+            font-family: "${config.stylix.fonts.monospace.name}";
+            font-size: ${toString config.stylix.fonts.sizes.desktop}pt;
+        }
+
+        ''
+        + lib.strings.concatMapStrings
+          (key: "@define-color base0${key} #${config.lib.stylix.colors."base0${key}"};\n")
+          (builtins.genList (i: lib.toHexString i) 16)
+        ;
     } // (let
       entries = builtins.readDir ../files/.config/waybar;
       names = builtins.attrNames entries;
@@ -30,7 +41,8 @@
 
     home.packages = with pkgs; [
       (writeShellScriptBin "fuzzel-power-menu" (builtins.readFile ../scripts/wayland/fuzzel-power-menu))
-      font-awesome
+      nerd-fonts.symbols-only
+      swaybg
       wl-clipboard
       xwayland-satellite
     ];
@@ -111,6 +123,23 @@
               rm "$wm_target"
             fi
           ''}";
+        };
+      };
+
+      swaybg = {
+        Unit = {
+          Description = "set background";
+          After = [ "graphical-session.target" ];
+          PartOf = [ "graphical-session.target" ];
+          ConditionEnvironment = "WAYLAND_DISPLAY";
+        };
+
+        Install = {
+          WantedBy = [ "graphical-session.target" ];
+        };
+
+        Service = {
+          ExecStart = with pkgs; "${swaybg}/bin/swaybg -i " + ../files/wallpaper.jpg;
         };
       };
     };

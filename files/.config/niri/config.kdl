@@ -118,6 +118,14 @@ gestures {
 	position x=1280 y=0
 }
 
+overview {
+	backdrop-color "#000000"
+	workspace-shadow {
+		color "#b698"
+		offset x=0 y=0
+	}
+}
+
 // Settings that influence how windows are positioned and sized.
 // Find more information on the wiki:
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Layout
