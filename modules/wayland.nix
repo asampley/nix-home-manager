@@ -9,7 +9,9 @@
     my.wayland.enable = lib.mkEnableOption "wayland configuration";
   };
 
-  config = lib.mkIf config.my.wayland.enable {
+  config = lib.mkIf config.my.wayland.enable (let
+    monitors-power = (pkgs.writeShellScript "monitors-power" (builtins.readFile ../scripts/wayland/monitors-power));
+  in {
     home.file = {
       ".config/niri".source = ../files/.config/niri;
 
@@ -67,29 +69,46 @@
     services.mako.enable = true;
 
     # Idle timeout
-    services.swayidle = let 
+    services.swayidle = let
       lock = "${pkgs.swaylock}/bin/swaylock --daemonize";
       lockSecs = 900;
+      lockNotifySecs = 30;
     in {
       enable = true;
+      extraArgs = [
+        "-d"
+      ];
       timeouts = [
-        #{
-        #  timeout = lockSecs - 60;
-        #  command = "${pkgs.libnotify}/bin/notify-send 'Locking in 5 seconds' -t 5000";
-        #}
-        #{
-        #  timeout = lockSecs;
-        #  command = lock;
-        #}
+        {
+          timeout = lockSecs - lockNotifySecs;
+          command = "${pkgs.libnotify}/bin/notify-send 'Locking in ${toString lockNotifySecs} seconds' -t ${toString lockNotifySecs}000";
+        }
+        {
+          timeout = lockSecs;
+          command = lock;
+        }
+        {
+          timeout = lockSecs + 5;
+          command = "${monitors-power} off";
+          resumeCommand = "${monitors-power} on";
+        }
       ];
       events = [
         {
           event = "before-sleep";
-          command = lock;
+          command = "${monitors-power} off; ${lock}";
         }
         {
           event = "lock";
-          command = lock;
+          command = "${monitors-power} off; ${lock}";
+        }
+        {
+          event = "after-resume";
+          command = "${monitors-power} on";
+        }
+        {
+          event = "unlock";
+          command = "${monitors-power} on";
         }
       ];
     };
@@ -139,9 +158,9 @@
         };
 
         Service = {
-          ExecStart = with pkgs; "${swaybg}/bin/swaybg -i " + ../files/wallpaper.jpg;
+          ExecStart = with pkgs; "${swaybg}/bin/swaybg -i ${config.stylix.image}";
         };
       };
     };
-  };
+  });
 }

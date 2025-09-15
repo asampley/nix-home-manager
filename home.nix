@@ -124,6 +124,7 @@ rec {
   stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/darkviolet.yaml";
 
   stylix.fonts.sizes.desktop = 10;
+  stylix.image = files/wallpaper.jpg;
 
   stylix.targets = {
     # firefox complains about changing settings if you mess with it

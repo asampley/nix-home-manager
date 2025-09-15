@@ -67,7 +67,9 @@
 		"format-icons": {
 			"activated": " 󱎬",
 			"deactivated": " 󱎫"
-		}
+		},
+		"tooltip-format-activated": "Idle lock disabled",
+		"tooltip-format-deactivated": "Idle lock enabled"
 	},
 	"tray": {
 		// "icon-size": 21,
