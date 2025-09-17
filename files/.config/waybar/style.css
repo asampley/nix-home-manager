@@ -17,17 +17,25 @@ tooltip {
 	border-color: @base0D;
 }
 
+.text-button,
+.module {
+	padding: 0.25em 0.325em;
+}
+
+.text-button {
+	min-height: 1.5em;
+	min-width: 1.65em;
+}
+
 .module {
 	background-color: @base05;
 	color: @base00;
-	padding: 0 5px;
 	border-radius: 5px;
 }
 
 #window {
 	background-color: @base0C;
 	color: @base00;
-	padding: 0 5px;
 	border-radius: 5px;
 }
 

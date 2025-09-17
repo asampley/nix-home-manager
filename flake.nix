@@ -15,6 +15,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+    };
+
     # Unified style settings for many programs
     stylix = {
       url = "github:danth/stylix";
@@ -23,63 +27,41 @@
   };
 
   outputs =
-    {
-      self,
-      nixpkgs,
-      systems,
-      home-manager,
-      stylix,
+    inputs@{
+      flake-parts,
       ...
     }:
-    {
-      homeModules = {
-        # Fallback system for terminal environment
-        "asampley" = {
-          config.my.podman.enable = true;
-        };
-
-        # Home computer with additional features
-        "asampley@amanda" = {
-          config.my.gui.enable = true;
-          config.my.podman.enable = true;
-          config.my.x.enable = true;
-          config.my.wayland.enable = true;
-          config.my.wine.enable = true;
-          config.stylix.enable = true;
-        };
-
-        # Laptop with additional features
-        "asampley@miranda" = {
-          config.my.gui.enable = true;
-          config.my.x.enable = true;
-          config.my.wayland.enable = true;
-          config.my.wine.enable = true;
-          config.my.podman.enable = true;
-          config.stylix.enable = true;
+    flake-parts.lib.mkFlake { inherit inputs; } (top: {
+      flake = {
+        homeModules = {
+          gui = import modules/gui.nix;
+          podman = import modules/podman.nix;
+          wayland = import modules/wayland.nix;
+          wine = import modules/wine.nix;
+          x = import modules/x.nix;
         };
       };
-
-      formatter = nixpkgs.lib.genAttrs (import systems) (
-        system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style
-      );
-
-      # Using packages.${system}.homeConfigurations allows us to build for many targets
-      packages = nixpkgs.lib.genAttrs (import systems) (system: {
-        homeConfigurations = builtins.mapAttrs (
-          name: value:
-          home-manager.lib.homeManagerConfiguration {
-            pkgs = import nixpkgs {
-              inherit system;
-              overlays = [ ];
+      systems = builtins.import ./systems.nix;
+      perSystem = { pkgs, ... }: {
+        formatter = pkgs.nixfmt-rfc-style;
+        legacyPackages = {
+          homeConfigurations = let
+            modules = [ ./home.nix inputs.stylix.homeModules.stylix ] ++ builtins.attrValues inputs.self.homeModules;
+          in builtins.mapAttrs (_: value: inputs.home-manager.lib.homeManagerConfiguration value) {
+            "asampley" = {
+              inherit pkgs;
+              modules = modules ++ [ hosts/default.nix ];
             };
-
-            modules = [
-              ./home.nix
-              stylix.homeModules.stylix
-              value
-            ];
-          }
-        ) self.homeModules;
-      });
-    };
+            "asampley@amanda" = {
+              inherit pkgs;
+              modules = modules ++ [ hosts/amanda.nix ];
+            };
+            "amanda@miranda" = {
+              inherit pkgs;
+              modules = modules ++ [ hosts/miranda.nix ];
+            };
+          };
+        };
+      };
+    });
 }
