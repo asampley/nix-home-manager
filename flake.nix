@@ -56,7 +56,7 @@
               inherit pkgs;
               modules = modules ++ [ hosts/amanda.nix ];
             };
-            "amanda@miranda" = {
+            "asampley@miranda" = {
               inherit pkgs;
               modules = modules ++ [ hosts/miranda.nix ];
             };
