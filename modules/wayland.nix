@@ -43,6 +43,7 @@
 
     home.packages = with pkgs; [
       (writeShellScriptBin "fuzzel-power-menu" (builtins.readFile ../scripts/wayland/fuzzel-power-menu))
+      (writeShellScriptBin "niri-fuzzel-monitor-orientation" (builtins.readFile ../scripts/wayland/niri-fuzzel-monitor-orientation))
       nerd-fonts.symbols-only
       swaybg
       wl-clipboard

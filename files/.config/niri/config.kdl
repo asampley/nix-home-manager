@@ -273,6 +273,11 @@ layout {
 		// top 64
 		// bottom 64
 	}
+
+	tab-indicator {
+		width 4
+		place-within-column
+	}
 }
 
 // Add lines like this to spawn processes at startup.
@@ -601,4 +606,5 @@ binds {
 	Mod+B { spawn "pkill" "waybar" "-SIGUSR1"; }
 	// Open power menu
 	Mod+Ctrl+P { spawn "fuzzel-power-menu"; }
+	Mod+Ctrl+O { spawn "niri-fuzzel-monitor-orientation"; }
 }
