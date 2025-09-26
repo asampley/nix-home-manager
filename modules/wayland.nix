@@ -12,11 +12,11 @@
   config = lib.mkIf config.my.wayland.enable (let
     monitors-power = (pkgs.writeShellScript "monitors-power" (builtins.readFile ../scripts/wayland/monitors-power));
   in {
-    home.file = {
-      ".config/niri".source = ../files/.config/niri;
+    xdg.configFile = {
+      "niri".source = ../files/.config/niri;
 
       # Generated from stylix
-      ".config/waybar/stylix.css".text =
+      "waybar/stylix.css".text =
         ''
         * {
             font-family: "${config.stylix.fonts.monospace.name}";
@@ -34,7 +34,7 @@
     in
         builtins.listToAttrs (
         map (name: {
-          name = ".config/waybar/${name}";
+          name = "waybar/${name}";
           value = { source = ../files/.config/waybar/${name}; };
         })
         names

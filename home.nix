@@ -83,18 +83,18 @@ rec {
     ".bash_profile".source = files/.bash_profile;
     ".bash_logout".source = files/.bash_logout;
     ".editorconfig".source = files/.editorconfig;
+  };
 
+  xdg.configFile = {
     # Link to repository in home-manager for easy changes and testing as it's already stored in its own repo
     # Though this does disable rollbacks, they can be done with git easily enough
-    ".config/nvim".source =
+    "nvim".source =
       config.lib.file.mkOutOfStoreSymlink "${home.homeDirectory}/.config/home-manager/files/.config/nvim";
-
-    ".config/tinted-theming.list".text = lib.strings.concatStringsSep "\n" (
+    "tinted-theming.list".text = lib.strings.concatStringsSep "\n" (
       map (key: "${config.lib.stylix.colors.${key}}")
         (builtins.genList (i: "base0" + lib.toHexString i) 16)
       );
   };
-
   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. These will be explicitly sourced when using a
   # shell provided by Home Manager. If you don't want to manage your shell

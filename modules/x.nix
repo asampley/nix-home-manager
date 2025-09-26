@@ -20,7 +20,10 @@
     home.file = {
       ".xsession".source = ../files/.xsession;
       ".xinitrc".source = ../files/.xinitrc;
-      ".config/awesome".source =
+    };
+
+    xdg.configFile = {
+      "awesome".source =
         config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/files/.config/awesome";
     };
 

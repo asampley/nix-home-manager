@@ -10,6 +10,9 @@
     compose = lib.mkEnableOption "podman compose support" // {
       default = true;
     };
+    dockerCompat = lib.mkEnableOption "docker executable linked to podman" // {
+      default = true;
+    };
   };
 
   config =
@@ -17,7 +20,10 @@
       cfg = config.my.podman;
     in
     lib.mkIf cfg.enable {
-      home.packages = with pkgs; lib.optionals cfg.compose [ podman-compose ];
+      home.packages = with pkgs; lib.optionals cfg.compose [ podman-compose ]
+        ++ lib.optionals cfg.dockerCompat [
+          (pkgs.writeShellScriptBin "docker" "exec -a $0 ${pkgs.podman}/bin/podman \"$@\"")
+        ];
 
       services.podman = {
         enable = true;
