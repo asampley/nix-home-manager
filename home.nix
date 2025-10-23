@@ -59,6 +59,7 @@ rec {
     neovim
     nh
     nixd
+    openconnect
     (openssh.override { withKerberos = true; })
     sshfs
     ripgrep
