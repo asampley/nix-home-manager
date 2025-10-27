@@ -392,9 +392,13 @@ binds {
 	XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }
 	XF86AudioMute        allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
 	XF86AudioMicMute     allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
+	Shift+XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.01+"; }
+	Shift+XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.01-"; }
 
 	XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "set" "5%+"; }
 	XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "set" "5%-"; }
+	Shift+XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "set" "1%+"; }
+	Shift+XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "set" "1%-"; }
 
 	// Open/close the Overview: a zoomed-out view of workspaces and windows.
 	// You can also move the mouse into the top-left hot corner,
@@ -575,7 +579,7 @@ binds {
 
 	// Move the focused window between the floating and the tiling layout.
 	Mod+Ctrl+V  { toggle-window-floating; }
-	Mod+Shift+V { switch-focus-between-floating-and-tiling; }
+	Mod+V { switch-focus-between-floating-and-tiling; }
 
 	// Toggle tabbed column display mode.
 	// Windows in this column will appear as vertical tabs,
@@ -613,8 +617,17 @@ binds {
 	Mod+Shift+P { power-off-monitors; }
 
 	// Toggle waybar
-	Mod+B { spawn "pkill" "waybar" "-SIGUSR1"; }
+	Mod+B hotkey-overlay-title="Toggle waybar" {
+		spawn "pkill" "waybar" "-SIGUSR1";
+	}
+
 	// Open power menu
-	Mod+Ctrl+P { spawn "fuzzel-power-menu"; }
-	Mod+Ctrl+O { spawn "niri-fuzzel-monitor-orientation"; }
+	Mod+Ctrl+P hotkey-overlay-title="Power menu" {
+		spawn "fuzzel-power-menu";
+	}
+
+	// Open menu for screen orientation
+	Mod+Ctrl+O hotkey-overlay-title="Screen Orientation Menu" {
+		spawn "niri-fuzzel-monitor-orientation";
+	}
 }
