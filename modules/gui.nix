@@ -11,7 +11,7 @@
 
   config = lib.mkIf config.my.gui.enable {
     home.packages = with pkgs; [
-      bitwarden
+      bitwarden-desktop
       chromium
       dconf
       dex
