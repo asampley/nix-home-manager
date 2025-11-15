@@ -20,7 +20,9 @@
       cfg = config.my.podman;
     in
     lib.mkIf cfg.enable {
-      home.packages = with pkgs; lib.optionals cfg.compose [ podman-compose ]
+      home.packages =
+        with pkgs;
+        lib.optionals cfg.compose [ podman-compose ]
         ++ lib.optionals cfg.dockerCompat [
           (pkgs.writeShellScriptBin "docker" "exec -a $0 ${pkgs.podman}/bin/podman \"$@\"")
         ];

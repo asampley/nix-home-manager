@@ -34,6 +34,7 @@
     flake-parts.lib.mkFlake { inherit inputs; } (top: {
       flake = {
         homeModules = {
+          games = import modules/games.nix;
           gui = import modules/gui.nix;
           podman = import modules/podman.nix;
           wayland = import modules/wayland.nix;
@@ -42,26 +43,34 @@
         };
       };
       systems = builtins.import ./systems.nix;
-      perSystem = { pkgs, ... }: {
-        formatter = pkgs.nixfmt-rfc-style;
-        legacyPackages = {
-          homeConfigurations = let
-            modules = [ ./home.nix inputs.stylix.homeModules.stylix ] ++ builtins.attrValues inputs.self.homeModules;
-          in builtins.mapAttrs (_: value: inputs.home-manager.lib.homeManagerConfiguration value) {
-            "asampley" = {
-              inherit pkgs;
-              modules = modules ++ [ hosts/default.nix ];
-            };
-            "asampley@amanda" = {
-              inherit pkgs;
-              modules = modules ++ [ hosts/amanda.nix ];
-            };
-            "asampley@miranda" = {
-              inherit pkgs;
-              modules = modules ++ [ hosts/miranda.nix ];
-            };
+      perSystem =
+        { pkgs, ... }:
+        {
+          formatter = pkgs.nixfmt-rfc-style;
+          legacyPackages = {
+            homeConfigurations =
+              let
+                modules = [
+                  ./home.nix
+                  inputs.stylix.homeModules.stylix
+                ]
+                ++ builtins.attrValues inputs.self.homeModules;
+              in
+              builtins.mapAttrs (_: value: inputs.home-manager.lib.homeManagerConfiguration value) {
+                "asampley" = {
+                  inherit pkgs;
+                  modules = modules ++ [ hosts/default.nix ];
+                };
+                "asampley@amanda" = {
+                  inherit pkgs;
+                  modules = modules ++ [ hosts/amanda.nix ];
+                };
+                "asampley@miranda" = {
+                  inherit pkgs;
+                  modules = modules ++ [ hosts/miranda.nix ];
+                };
+              };
           };
         };
-      };
     });
 }

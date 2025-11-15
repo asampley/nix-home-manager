@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 rec {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -75,11 +80,9 @@ rec {
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
-    ".profile".text =
-      (builtins.readFile files/.profile)
-      + ''
-        . $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh
-      '';
+    ".profile".text = (builtins.readFile files/.profile) + ''
+      . $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh
+    '';
     ".bashrc".source = files/.bashrc;
     ".bash_profile".source = files/.bash_profile;
     ".bash_logout".source = files/.bash_logout;
@@ -92,9 +95,10 @@ rec {
     "nvim".source =
       config.lib.file.mkOutOfStoreSymlink "${home.homeDirectory}/.config/home-manager/files/.config/nvim";
     "tinted-theming.list".text = lib.strings.concatStringsSep "\n" (
-      map (key: "${config.lib.stylix.colors.${key}}")
-        (builtins.genList (i: "base0" + lib.toHexString i) 16)
-      );
+      map (key: "${config.lib.stylix.colors.${key}}") (
+        builtins.genList (i: "base0" + lib.toHexString i) 16
+      )
+    );
   };
   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. These will be explicitly sourced when using a

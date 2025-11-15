@@ -3,17 +3,11 @@
 
 window#waybar {
 	background: transparent;
-}
-
-tooltip {
-	background: @base00,
-}
-
-window#waybar, tooltip {
 	color: @base05;
 }
 
 tooltip {
+	background: @base00;
 	border-color: @base0D;
 }
 
@@ -28,40 +22,42 @@ tooltip {
 }
 
 .module {
-	background-color: @base05;
-	color: @base00;
-	border-radius: 5px;
+	background-color: transparent;
+	border-radius: 4px;
+	border-bottom: 2px solid @base0E;
 }
 
 #window {
-	background-color: @base0C;
-	color: @base00;
-	border-radius: 5px;
+	border-color: @base0D;
+	font-weight: bold;
 }
 
 window#waybar.empty #window {
 	background-color: transparent;
+	border: none;
 }
 
 #workspaces {
 	background-color: transparent;
+	border: none;
 	padding: 0;
 }
 
 #workspaces button {
-	background-color: @base03;
-	color: @base00;
+	background-color: transparent;
+	border: none;
+	border-radius: 4px;
+	border-bottom: 2px solid @base0E;
 }
 #workspaces button.empty {
-	background-color: transparent;
+	border-color: @base03;
+	border-style: dashed;
 	color: @base03;
-	border: 2px dashed @base03;
 }
 #workspaces button.focused,
 #workspaces button.active {
-	background-color: @base05;
-	color: @base00;
-	border: none;
+	border-color: @base0D;
+	color: @base0D;
 }
 #workspaces button.urgent {
 	background-color: @base08;
@@ -70,14 +66,13 @@ window#waybar.empty #window {
 #wireplumber.muted,
 #pulseaudio.muted,
 #sndio.muted {
-	background-color: @base0C;
+	border-color: @base08;
 }
 #upower.charging,
-#battery.Charging {
-	background-color: @base0E;
+#battery.charging {
+	border-color: @base0B;
 }
 #network.disconnected,
 #bluetooth.disabled {
-	background-color: @base00;
-	color: @base05;
+	border-color: @base08;
 }

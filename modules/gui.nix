@@ -20,9 +20,9 @@
       inkscape
       kdePackages.kdenlive
       libreoffice
-      xfce.thunar
       qbittorrent
       vlc
+      xfce.thunar
     ];
 
     programs.alacritty = {
