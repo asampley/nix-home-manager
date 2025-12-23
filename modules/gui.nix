@@ -20,6 +20,7 @@
       inkscape
       kdePackages.kdenlive
       libreoffice
+      mpv
       qbittorrent
       vlc
       xfce.thunar
