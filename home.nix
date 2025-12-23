@@ -136,4 +136,10 @@ rec {
     # Custom css created
     waybar.enable = false;
   };
+
+  services.home-manager.autoUpgrade = {
+    enable = true;
+    useFlake = true;
+    frequency = "Mon *-*-* 00:00:00";
+  };
 }
