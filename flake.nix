@@ -36,6 +36,7 @@
         homeModules = {
           games = import modules/games.nix;
           gui = import modules/gui.nix;
+          nextcloud = import modules/nextcloud.nix;
           podman = import modules/podman.nix;
           wayland = import modules/wayland.nix;
           wine = import modules/wine.nix;
@@ -46,7 +47,7 @@
       perSystem =
         { pkgs, ... }:
         {
-          formatter = pkgs.nixfmt-rfc-style;
+          formatter = pkgs.nixfmt;
           legacyPackages = {
             homeConfigurations =
               let

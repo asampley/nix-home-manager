@@ -67,6 +67,7 @@ rec {
     openconnect
     (openssh.override { withKerberos = true; })
     sshfs
+    tcpdump
     ripgrep
     unzip
   ];

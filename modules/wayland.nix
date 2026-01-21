@@ -104,24 +104,12 @@
               resumeCommand = "${monitors-power} on";
             }
           ];
-          events = [
-            {
-              event = "before-sleep";
-              command = "${monitors-power} off; ${lock}";
-            }
-            {
-              event = "lock";
-              command = "${monitors-power} off; ${lock}";
-            }
-            {
-              event = "after-resume";
-              command = "${monitors-power} on";
-            }
-            {
-              event = "unlock";
-              command = "${monitors-power} on";
-            }
-          ];
+          events = {
+            before-sleep = "${monitors-power} off; ${lock}";
+            lock = "${monitors-power} off; ${lock}";
+            after-resume = "${monitors-power} on";
+            unlock = "${monitors-power} on";
+          };
         };
 
       services.polkit-gnome.enable = true;
