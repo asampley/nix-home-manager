@@ -10,6 +10,7 @@
           dex
           discord
           firefox
+          gnome-network-displays
           inkscape
           kdePackages.kdenlive
           libreoffice
