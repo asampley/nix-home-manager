@@ -1,48 +1,42 @@
 {
-  config,
-  lib,
-  pkgs,
-  ...
-}:
-{
-  options = {
-    my.gui.enable = lib.mkEnableOption "gui configuration";
-  };
+  flake.homeModules.gui =
+    { lib, pkgs, ... }:
+    {
+      config = {
+        home.packages = with pkgs; [
+          bitwarden-desktop
+          chromium
+          dconf
+          dex
+          discord
+          firefox
+          inkscape
+          kdePackages.kdenlive
+          libreoffice
+          mpv
+          qbittorrent
+          vlc
+          thunar
+        ];
 
-  config = lib.mkIf config.my.gui.enable {
-    home.packages = with pkgs; [
-      bitwarden-desktop
-      chromium
-      dconf
-      dex
-      discord
-      firefox
-      inkscape
-      kdePackages.kdenlive
-      libreoffice
-      mpv
-      qbittorrent
-      vlc
-      xfce.thunar
-    ];
+        programs.alacritty = {
+          enable = true;
+        };
 
-    programs.alacritty = {
-      enable = true;
-    };
+        programs.obs-studio = {
+          enable = true;
+          plugins = [
+            pkgs.obs-studio-plugins.obs-pipewire-audio-capture
+          ];
+        };
 
-    programs.obs-studio = {
-      enable = true;
-      plugins = [
-        pkgs.obs-studio-plugins.obs-pipewire-audio-capture
-      ];
-    };
+        dconf.settings = {
+          "org/gnome/desktop/interface" = {
+            color-scheme = lib.mkForce "prefer-dark";
+          };
+        };
 
-    dconf.settings = {
-      "org/gnome/desktop/interface" = {
-        color-scheme = lib.mkForce "prefer-dark";
+        fonts.fontconfig.enable = true;
       };
     };
-
-    fonts.fontconfig.enable = true;
-  };
 }

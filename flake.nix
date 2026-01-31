@@ -15,9 +15,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    flake-parts = {
-      url = "github:hercules-ci/flake-parts";
-    };
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    import-tree.url = "github:vic/import-tree";
 
     # Unified style settings for many programs
     stylix = {
@@ -28,49 +27,55 @@
 
   outputs =
     inputs@{
+      self,
       flake-parts,
       ...
     }:
     flake-parts.lib.mkFlake { inherit inputs; } (top: {
-      flake = {
-        homeModules = {
-          games = import modules/games.nix;
-          gui = import modules/gui.nix;
-          nextcloud = import modules/nextcloud.nix;
-          podman = import modules/podman.nix;
-          wayland = import modules/wayland.nix;
-          wine = import modules/wine.nix;
-          x = import modules/x.nix;
-        };
-      };
-      systems = builtins.import ./systems.nix;
+      imports = [
+        inputs.home-manager.flakeModules.home-manager
+        (inputs.import-tree ./modules)
+      ];
+      systems = import ./systems.nix;
       perSystem =
         { pkgs, ... }:
         {
           formatter = pkgs.nixfmt;
           legacyPackages = {
             homeConfigurations =
-              let
-                modules = [
-                  ./home.nix
-                  inputs.stylix.homeModules.stylix
-                ]
-                ++ builtins.attrValues inputs.self.homeModules;
-              in
-              builtins.mapAttrs (_: value: inputs.home-manager.lib.homeManagerConfiguration value) {
-                "asampley" = {
-                  inherit pkgs;
-                  modules = modules ++ [ hosts/default.nix ];
+              builtins.mapAttrs (_: value: inputs.home-manager.lib.homeManagerConfiguration value)
+                {
+                  "asampley" = {
+                    inherit pkgs;
+                    modules = with self.homeModules; [
+                      default
+                    ];
+                  };
+                  "asampley@amanda" = {
+                    inherit pkgs;
+                    modules = with self.homeModules; [
+                      default
+                      games
+                      gui
+                      podman
+                      stylix
+                      wayland
+                      wine
+                    ];
+                  };
+                  "asampley@miranda" = {
+                    inherit pkgs;
+                    modules = with self.homeModules; [
+                      default
+                      games
+                      gui
+                      podman
+                      stylix
+                      wayland
+                      wine
+                    ];
+                  };
                 };
-                "asampley@amanda" = {
-                  inherit pkgs;
-                  modules = modules ++ [ hosts/amanda.nix ];
-                };
-                "asampley@miranda" = {
-                  inherit pkgs;
-                  modules = modules ++ [ hosts/miranda.nix ];
-                };
-              };
           };
         };
     });
