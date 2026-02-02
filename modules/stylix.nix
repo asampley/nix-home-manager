@@ -9,10 +9,6 @@
       ...
     }:
     {
-      imports = [
-        inputs.stylix.homeModules.stylix
-      ];
-
       options.my.stylix = {
         enable = lib.mkEnableOption "stylix styles" // {
           default = true;

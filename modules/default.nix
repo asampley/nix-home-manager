@@ -126,6 +126,15 @@
           useFlake = true;
           frequency = "Mon *-*-* 00:00:00";
         };
+
+        systemd.user.services.home-manager-auto-upgrade.Unit = {
+          OnFailure = lib.mkIf (
+            config.systemd.user.services ? "on-failure@"
+          ) "on-failure@home-manager-auto-upgrade.service";
+          OnSuccess = lib.mkIf (
+            config.systemd.user.services ? "on-success@"
+          ) "on-success@home-manager-auto-upgrade.service";
+        };
       };
     };
 }

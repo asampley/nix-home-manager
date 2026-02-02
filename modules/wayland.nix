@@ -92,6 +92,7 @@
         services.swayidle =
           let
             lock = "${pkgs.swaylock}/bin/swaylock --daemonize";
+            lockWarn = "${pkgs.libnotify}/bin/notify-send 'Locking in ${toString lockNotifySecs} seconds' --urgency low --expire-time ${toString lockNotifySecs}000";
             monitors-power = "${self'.packages.monitors-power}/bin/monitors-power";
             lockSecs = 900;
             lockNotifySecs = 30;
@@ -104,7 +105,7 @@
             timeouts = [
               {
                 timeout = lockSecs - lockNotifySecs;
-                command = "${pkgs.libnotify}/bin/notify-send 'Locking in ${toString lockNotifySecs} seconds' -t ${toString lockNotifySecs}000";
+                command = lockWarn;
               }
               {
                 timeout = lockSecs;

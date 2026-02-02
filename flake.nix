@@ -42,6 +42,9 @@
         {
           formatter = pkgs.nixfmt;
           legacyPackages = {
+            # Home configurations defined as legacy packages to allow having a default for all systems.
+            #
+            # Currently it seemse like legacyPackages is checked first for a valid configuration, so all must be here.
             homeConfigurations =
               builtins.mapAttrs (_: value: inputs.home-manager.lib.homeManagerConfiguration value)
                 {
@@ -54,11 +57,14 @@
                   "asampley@amanda" = {
                     inherit pkgs;
                     modules = with self.homeModules; [
+                      inputs.stylix.homeModules.stylix
                       default
                       games
                       gui
+                      gui-notify
                       podman
                       stylix
+                      systemd-templates
                       wayland
                       wine
                     ];
@@ -66,12 +72,15 @@
                   "asampley@miranda" = {
                     inherit pkgs;
                     modules = with self.homeModules; [
+                      inputs.stylix.homeModules.stylix
                       default
                       games
                       gui
+                      gui-notify
                       nextcloud
                       podman
                       stylix
+                      systemd-templates
                       wayland
                       wine
                     ];
