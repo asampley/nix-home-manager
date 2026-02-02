@@ -92,6 +92,7 @@
         services.swayidle =
           let
             lock = "${pkgs.swaylock}/bin/swaylock --daemonize";
+            monitors-power = "${self'.packages.monitors-power}/bin/monitors-power";
             lockSecs = 900;
             lockNotifySecs = 30;
           in
@@ -111,15 +112,15 @@
               }
               {
                 timeout = lockSecs + 5;
-                command = "${self'.packages.monitors-power} off";
-                resumeCommand = "${self'.packages.monitors-power} on";
+                command = "${monitors-power} off";
+                resumeCommand = "${monitors-power} on";
               }
             ];
             events = {
-              before-sleep = "${self'.packages.monitors-power} off; ${lock}";
-              lock = "${self'.packages.monitors-power} off; ${lock}";
-              after-resume = "${self'.packages.monitors-power} on";
-              unlock = "${self'.packages.monitors-power} on";
+              before-sleep = "${monitors-power} off; ${lock}";
+              lock = "${monitors-power} off; ${lock}";
+              after-resume = "${monitors-power} on";
+              unlock = "${monitors-power} on";
             };
           };
 

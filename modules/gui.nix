@@ -16,8 +16,8 @@
           libreoffice
           mpv
           qbittorrent
-          vlc
           thunar
+          xournalpp
         ];
 
         programs.alacritty = {
