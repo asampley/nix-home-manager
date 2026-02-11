@@ -30,7 +30,40 @@
     {
       config = {
         xdg.configFile = {
-          "niri".source = ../files/.config/niri;
+          "niri".source = pkgs.symlinkJoin {
+            name = "niri-config";
+            paths = [
+              ../files/.config/niri
+              (
+                with config.lib.stylix.colors;
+                pkgs.writeTextDir "style.kdl" ''
+                  overview {
+                    backdrop-color "#${base00}"
+                    workspace-shadow {
+                      color "#${base05}"
+                    }
+                  }
+
+                  layout {
+                    focus-ring {
+                      active-color "#${base0D}"
+                      inactive-color "#${base03}"
+                    }
+
+                    border {
+                      active-color "#${base0D}"
+                      inactive-color "#${base03}"
+                      urgent-color "#${base08}"
+                    }
+
+                    shadow {
+                      color "#${base05}77"
+                    }
+                  }
+                ''
+              )
+            ];
+          };
 
           # Generated from stylix
           "waybar/stylix.css".text = ''
@@ -38,7 +71,6 @@
                 font-family: "${config.stylix.fonts.monospace.name}";
                 font-size: ${toString config.stylix.fonts.sizes.desktop}pt;
             }
-
           ''
           + lib.strings.concatMapStrings (
             key: "@define-color base0${key} #${config.lib.stylix.colors."base0${key}"};\n"
@@ -62,10 +94,15 @@
         home.packages = with pkgs; [
           self'.packages.fuzzel-power-menu
           self'.packages.niri-fuzzel-monitor-orientation
+          # command line brightness
           brightnessctl
+          # render icons in waybar
           nerd-fonts.symbols-only
+          # desktop background
           swaybg
+          # clipboard command line and integration
           wl-clipboard
+          # x application shim
           xwayland-satellite
         ];
 
