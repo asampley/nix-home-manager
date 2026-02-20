@@ -23,6 +23,12 @@
 
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:vic/import-tree";
+
+    # Secrets management
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -72,17 +78,22 @@
                   "asampley@miranda" = {
                     inherit pkgs;
                     modules = with self.homeModules; [
+                      inputs.sops-nix.homeModules.sops
                       inputs.stylix.homeModules.stylix
                       default
                       games
                       gui
                       gui-notify
                       nextcloud
+                      nextcloud-sops
                       podman
+                      sops
                       stylix
                       systemd-templates
+                      tablet
                       wayland
                       wine
+                      { config.my.tablet.niri = true; }
                     ];
                   };
                 };

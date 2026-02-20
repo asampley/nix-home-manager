@@ -98,6 +98,8 @@
           brightnessctl
           # render icons in waybar
           nerd-fonts.symbols-only
+          # on screen keyboard
+          squeekboard
           # desktop background
           swaybg
           # clipboard command line and integration
@@ -196,6 +198,23 @@
                     rm "$wm_target"
                   fi
                 ''}";
+            };
+          };
+
+          on-screen-keyboard = {
+            Unit = {
+              Description = "on screen keyboard";
+              After = [ "graphical-session.target" ];
+              PartOf = [ "graphical-session.target" ];
+              ConditionEnvironment = "WAYLAND_DISPLAY";
+            };
+
+            Install = {
+              WantedBy = [ "graphical-session.target" ];
+            };
+
+            Service = {
+              ExecStart = with pkgs; "${squeekboard}/bin/squeekboard";
             };
           };
 
