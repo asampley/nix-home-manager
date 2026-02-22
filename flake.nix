@@ -91,35 +91,38 @@
                   };
                   "asampley@miranda" = {
                     inherit pkgs;
-                    modules = with inputs.asampley.homeModules; with self.homeModules; [
-                      inputs.sops-nix.homeModules.sops
-                      inputs.stylix.homeModules.stylix
-                      default
-                      games
-                      gui
-                      nextcloud
-                      nextcloud-sops
-                      notifications
-                      ntfy-client-sops
-                      podman
-                      sops
-                      stylix
-                      tablet
-                      wayland
-                      wine
-                      {
-                        config.my.tablet.niri = true;
-                        config.my.notifications = {
-                          enable = true;
-                          libnotify.enable = true;
-                          ntfy = {
+                    modules =
+                      with inputs.asampley.homeModules;
+                      with self.homeModules;
+                      [
+                        inputs.sops-nix.homeModules.sops
+                        inputs.stylix.homeModules.stylix
+                        default
+                        games
+                        gui
+                        nextcloud
+                        nextcloud-sops
+                        notifications
+                        ntfy-client-sops
+                        podman
+                        sops
+                        stylix
+                        tablet
+                        wayland
+                        wine
+                        {
+                          config.my.tablet.niri = true;
+                          config.my.notifications = {
                             enable = true;
-                            address = "https://ntfy.asampley.ca";
-                            sops.enable = true;
+                            libnotify.enable = true;
+                            ntfy = {
+                              enable = true;
+                              address = "https://ntfy.asampley.ca";
+                              sops.enable = true;
+                            };
                           };
-                        };
-                      }
-                    ];
+                        }
+                      ];
                   };
                 };
           };
