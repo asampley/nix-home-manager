@@ -132,7 +132,7 @@
             config.systemd.user.services ? "notify-on-failure@"
           ) "notify-on-failure@home-manager-auto-upgrade.service";
           OnSuccess = lib.mkIf (
-            config.systemd.user.services ? "on-success@"
+            config.systemd.user.services ? "notify-on-success@"
           ) "notify-on-success@home-manager-auto-upgrade.service";
         };
       };
