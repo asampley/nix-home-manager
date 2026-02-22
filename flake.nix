@@ -29,6 +29,15 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Prepare to merge with nix-os-config
+    asampley = {
+      url = "github:asampley/nix-os-config";
+      inputs.systems.follows = "systems";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.import-tree.follows = "import-tree";
+    };
   };
 
   outputs =
@@ -67,33 +76,49 @@
                       default
                       games
                       gui
-                      gui-notify
+                      notifications
                       podman
                       stylix
-                      systemd-templates
                       wayland
                       wine
+                      {
+                        config.my.notifications = {
+                          enable = true;
+                          libnotify.enable = true;
+                        };
+                      }
                     ];
                   };
                   "asampley@miranda" = {
                     inherit pkgs;
-                    modules = with self.homeModules; [
+                    modules = with inputs.asampley.homeModules; with self.homeModules; [
                       inputs.sops-nix.homeModules.sops
                       inputs.stylix.homeModules.stylix
                       default
                       games
                       gui
-                      gui-notify
                       nextcloud
                       nextcloud-sops
+                      notifications
+                      ntfy-client-sops
                       podman
                       sops
                       stylix
-                      systemd-templates
                       tablet
                       wayland
                       wine
-                      { config.my.tablet.niri = true; }
+                      {
+                        config.my.tablet.niri = true;
+                        config.my.notifications = {
+                          enable = true;
+                          libnotify.enable = true;
+                          ntfy = {
+                            enable = true;
+                            address = "https://ntfy.asampley.ca";
+                            sops.enable = true;
+                          };
+                        };
+                      }
                     ];
                   };
                 };

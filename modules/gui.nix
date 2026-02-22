@@ -44,20 +44,4 @@
         fonts.fontconfig.enable = true;
       };
     };
-
-  # Requires systemd-templates, so separated out
-  flake.homeModules.gui-notify =
-    { pkgs, ... }:
-    {
-      my.systemd-templates = {
-        on-failure.script = ''
-          unit=$1
-          ${pkgs.libnotify}/bin/notify-send "$unit service failed." --urgency critical;
-        '';
-        on-success.script = ''
-          unit=$1
-          ${pkgs.libnotify}/bin/notify-send "$unit service succeeded.";
-        '';
-      };
-    };
 }

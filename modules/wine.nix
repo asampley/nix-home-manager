@@ -4,7 +4,7 @@
     {
       config = {
         home.packages = with pkgs; [
-          (wineWowPackages.full.override {
+          (wineWow64Packages.full.override {
             wineRelease = "staging";
             mingwSupport = true;
           })
