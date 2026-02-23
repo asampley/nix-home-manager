@@ -2,34 +2,30 @@
   "nodes": {
     "asampley": {
       "inputs": {
-        "flake-parts": [
-          "flake-parts"
-        ],
-        "import-tree": [
-          "import-tree"
-        ],
+        "flake-parts": "flake-parts",
+        "home-manager": "home-manager",
+        "import-tree": "import-tree",
         "nix-alien": "nix-alien",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": [
-          "nixpkgs"
-        ],
+        "nixpkgs": "nixpkgs_2",
         "sops-nix": "sops-nix",
+        "stylix": "stylix",
         "systems": [
           "systems"
         ],
         "utf-nate": "utf-nate"
       },
       "locked": {
-        "lastModified": 1771798396,
-        "narHash": "sha256-S+X+ObZgM4wCywqoSvbxSufwT7aM1FPB6GPohd0WCdw=",
+        "lastModified": 1771805426,
+        "narHash": "sha256-qXCxPl3N/NdayOsmFWCvrYJc8wPr9V6Smgv/6/pxDUU=",
         "owner": "asampley",
-        "repo": "nix-os-config",
-        "rev": "f9b8ed089979ef4d8b013ec308bb039a7b0ca6f8",
+        "repo": "nix-config",
+        "rev": "99f7326005a72af2718535148a16e543a051c377",
         "type": "github"
       },
       "original": {
         "owner": "asampley",
-        "repo": "nix-os-config",
+        "repo": "nix-config",
         "type": "github"
       }
     },
@@ -153,6 +149,7 @@
     "flake-parts_2": {
       "inputs": {
         "nixpkgs-lib": [
+          "asampley",
           "stylix",
           "nixpkgs"
         ]
@@ -209,6 +206,7 @@
     "home-manager": {
       "inputs": {
         "nixpkgs": [
+          "asampley",
           "nixpkgs"
         ]
       },
@@ -334,13 +332,13 @@
       "locked": {
         "lastModified": 1771369470,
         "narHash": "sha256-0NBlEBKkN3lufyvFegY4TYv5mCNHbi5OmBDrzihbBMQ=",
-        "owner": "nixos",
+        "owner": "NixOS",
         "repo": "nixpkgs",
         "rev": "0182a361324364ae3f436a63005877674cf45efb",
         "type": "github"
       },
       "original": {
-        "owner": "nixos",
+        "owner": "NixOS",
         "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
@@ -349,10 +347,12 @@
     "nur": {
       "inputs": {
         "flake-parts": [
+          "asampley",
           "stylix",
           "flake-parts"
         ],
         "nixpkgs": [
+          "asampley",
           "stylix",
           "nixpkgs"
         ]
@@ -374,39 +374,13 @@
     "root": {
       "inputs": {
         "asampley": "asampley",
-        "flake-parts": "flake-parts",
-        "home-manager": "home-manager",
-        "import-tree": "import-tree",
-        "nixpkgs": "nixpkgs_2",
-        "sops-nix": "sops-nix_2",
-        "stylix": "stylix",
-        "systems": "systems_3"
+        "systems": "systems_2"
       }
     },
     "sops-nix": {
       "inputs": {
         "nixpkgs": [
           "asampley",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1771735105,
-        "narHash": "sha256-MJuVJeszZEziquykEHh/hmgIHYxUcuoG/1aowpLiSeU=",
-        "owner": "Mic92",
-        "repo": "sops-nix",
-        "rev": "d7755d820f5fa8acf7f223309c33e25d4f92e74f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Mic92",
-        "repo": "sops-nix",
-        "type": "github"
-      }
-    },
-    "sops-nix_2": {
-      "inputs": {
-        "nixpkgs": [
           "nixpkgs"
         ]
       },
@@ -434,10 +408,14 @@
         "flake-parts": "flake-parts_2",
         "gnome-shell": "gnome-shell",
         "nixpkgs": [
+          "asampley",
           "nixpkgs"
         ],
         "nur": "nur",
-        "systems": "systems_2",
+        "systems": [
+          "asampley",
+          "systems"
+        ],
         "tinted-foot": "tinted-foot",
         "tinted-kitty": "tinted-kitty",
         "tinted-schemes": "tinted-schemes",
@@ -474,21 +452,6 @@
       ]
     },
     "systems_2": {
-      "locked": {
-        "lastModified": 1681028828,
-        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
-        "owner": "nix-systems",
-        "repo": "default",
-        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-systems",
-        "repo": "default",
-        "type": "github"
-      }
-    },
-    "systems_3": {
       "flake": false,
       "locked": {
         "path": "systems.nix",
